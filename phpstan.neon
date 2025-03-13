@@ -5,7 +5,8 @@ parameters:
 	paths:
 		- src
 		- tests
-		- templates
-		- skeleton.php
 	excludePaths:
+		- tests/WP_Error.php
+		- packages
+		- vendor
 	ignoreErrors:

@@ -1,9 +1,9 @@
 {
-	"name": "mazepress/skeleton",
+	"name": "mazepress/gateway-paypal",
 	"type": "wordpress-plugin",
 	"description": "A custom WordPress plugin.",
 	"license": "MIT",
-	"repositories": [
+  "repositories": [
     {
       "type": "composer",
       "url": "https://mazepress.github.io/packagist"
@@ -11,13 +11,12 @@
   ],
 	"require": {
 		"php": "^7.4 | ^8.0",
-		"automattic/jetpack-autoloader": "^2.12",
 		"composer/installers": "^2.2",
-    "mazepress/plugin": "dev-main"
+		"mazepress/gateway": "^1.2",
+		"paypal/paypal-checkout-sdk": "^1.0"
 	},
 	"require-dev": {
 		"phpcompatibility/phpcompatibility-wp": "^2.1.4",
-		"wp-cli/i18n-command": "^2.5",
 		"wp-coding-standards/wpcs": "^3.0.1",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"szepeviktor/phpstan-wordpress": "^1.3.2",
@@ -26,40 +25,33 @@
 		"teqnomaze/code-coverage": "^1.0"
 	},
 	"scripts": {
-    "build": [
-      "wp i18n make-pot . ./languages/skeleton.pot --include='src,templates,skeleton.php'"
-    ],
 		"phpcs": "./vendor/bin/phpcs --standard=phpcs.xml",
-		"phpcbf": "./vendor/bin/phpcbf src tests templates skeleton.php",
+		"phpcbf": "./vendor/bin/phpcbf src tests",
 		"phpstan": "./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 2G",
 		"phpunit": "./vendor/bin/phpunit --configuration phpunit.xml",
-		"coverage": "./vendor/bin/code-coverage ./build/clover.xml 90",
-		"make:pot": "./vendor/bin/wp i18n make-pot . ./languages/skeleton.pot --include='src,templates,skeleton.php'",
-		"make:mo": "./vendor/bin/wp i18n make-mo ./languages/skeleton.pot'",
-		"update:po": "./vendor/bin/wp i18n update-po ./languages/skeleton.pot'"
+		"coverage": "./vendor/bin/code-coverage ./build/clover.xml 90"
 	},
 	"autoload": {
 		"psr-4": {
-			"Mazepress\\Skeleton\\": "src"
+			"Mazepress\\Gateway\\Paypal\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Mazepress\\Skeleton\\Tests\\": "tests"
+			"Mazepress\\Gateway\\paypal\\Tests\\": "tests"
 		}
 	},
 	"prefer-stable": true,
-	"minimum-stability": "dev",
+	"minimum-stability": "stable",
 	"config": {
 		"optimize-autoloader": true,
 		"sort-packages": true,
 		"allow-plugins": {
 			"composer/installers": true,
-			"automattic/jetpack-autoloader": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
-	"extra": {
+  "extra": {
 		"installer-paths": {
 			"packages/{$name}/": ["type:wordpress-plugin"]
 		}

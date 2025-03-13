@@ -20,10 +20,11 @@
 	<arg name="extensions" value="php"/>
 
 	<!-- Check all files in this directory and the directories below it. -->
-	<file>skeleton.php</file>
 	<file>src</file>
 	<file>tests</file>
-	<file>templates</file>
+
+	<!-- Exclude files -->
+	<exclude-pattern>tests/WP_Error.php</exclude-pattern>
 
 	<!--
 	Include the WordPress standard.
@@ -45,7 +46,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="skeleton"/>
+				<element value="gatewaypaypal"/>
 			</property>
 		</properties>
 	</rule>
@@ -68,7 +69,7 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="skeleton"/>
+				<element value="gatewaypaypal"/>
 			</property>
 		</properties>
 
