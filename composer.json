@@ -38,7 +38,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Mazepress\\Gateway\\paypal\\Tests\\": "tests"
+			"Mazepress\\Gateway\\Paypal\\Tests\\": "tests"
 		}
 	},
 	"prefer-stable": true,
