@@ -175,8 +175,10 @@ class PaypalGatewayTest extends WP_Mock\Tools\TestCase {
 		$object = new PaypalGateway( 'public1', 'private1' );
 
 		$object->set_return_url( 'http://localhost.com/success' )
-			->set_cancel_url( 'http://localhost.com/cancel' )
-			->set_amount( 100 );
+			->set_cancel_url( 'http://localhost.com/cancel' );
+
+		$object->set_invoice_id( uniqid() );
+		$object->set_amount( 100 );
 
 		$client = Mockery::mock( PayPalHttpClient::class );
 		$body   = $this->get_checkout_response();
@@ -194,7 +196,7 @@ class PaypalGatewayTest extends WP_Mock\Tools\TestCase {
 		WP_Mock::passthruFunction( 'set_transient' );
 
 		$this->expectOutputRegex( '/.*/' );
-		$object->checkout();
+		$object->checkout( 'test' );
 	}
 
 	/**

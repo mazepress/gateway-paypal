@@ -190,18 +190,13 @@ class PaypalGateway extends Payment {
 			}
 
 			$invoice_id = $this->get_invoice_id();
-
 			if ( ! empty( $invoice_id ) && ! empty( $form ) ) {
-				// Store the Reference ID for process validation.
-				set_transient(
-					$invoice_id,
-					array(
-						'form'    => $form,
-						'amount'  => $amount,
-						'orderid' => $response->result->id,
-					),
-					600
+				$transdata = array(
+					'form'    => $form,
+					'amount'  => $amount,
+					'orderid' => $response->result->id,
 				);
+				set_transient( $invoice_id, $transdata, 600 );
 			}
 
 			header( 'HTTP/1.1 303 See Other' );
@@ -262,6 +257,10 @@ class PaypalGateway extends Payment {
 				)
 			);
 
+			$invoice_id = $this->get_invoice_id();
+			if ( ! empty( $invoice_id ) ) {
+				delete_transient( $invoice_id );
+			}
 		} catch ( HttpException $ex ) {
 			return new WP_Error( 'broke', $ex->getMessage() );
 		}
