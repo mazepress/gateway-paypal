@@ -206,7 +206,7 @@ class PaypalGateway extends Payment {
 				exit();
 			}
 		} catch ( HttpException $ex ) {
-			return new WP_Error( 'broke', $ex->getMessage() );
+			return new WP_Error( 'broke', __( ' Error on capturing the payment request!', 'gatewaypaypal' ) );
 		}
 	}
 
@@ -262,7 +262,7 @@ class PaypalGateway extends Payment {
 				delete_transient( $invoice_id );
 			}
 		} catch ( HttpException $ex ) {
-			return new WP_Error( 'broke', $ex->getMessage() );
+			return new WP_Error( 'broke', __( ' Error on capturing the payment request!', 'gatewaypaypal' ) );
 		}
 
 		return $transaction;
