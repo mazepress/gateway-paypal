@@ -112,9 +112,11 @@ class PaypalGateway extends Payment {
 	/**
 	 * Checkout the form.
 	 *
+	 * @param string $form The form name.
+	 *
 	 * @return void|WP_Error
 	 */
-	public function checkout() {
+	public function checkout( string $form = '' ) {
 
 		$environment = $this->environment();
 
@@ -187,8 +189,20 @@ class PaypalGateway extends Payment {
 				);
 			}
 
-			// Store the Reference ID for process validation.
-			set_transient( $response->result->id, (string) $this->get_invoice_id(), 0 );
+			$invoice_id = $this->get_invoice_id();
+
+			if ( ! empty( $invoice_id ) && ! empty( $form ) ) {
+				// Store the Reference ID for process validation.
+				set_transient(
+					$invoice_id,
+					array(
+						'form'    => $form,
+						'amount'  => $amount,
+						'orderid' => $response->result->id,
+					),
+					600
+				);
+			}
 
 			header( 'HTTP/1.1 303 See Other' );
 			header( 'Location: ' . $approve_url );
